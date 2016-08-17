@@ -12,7 +12,7 @@ E.g.:
 
     pk1 <- new_ode_model(model = "pk_1cmt_oral")
 
-### Custom model from code
+## Custom model from code
 
 The custom model needs to be specified as a string or text block:
 
@@ -45,7 +45,7 @@ The input code is translated into a C++ function. You can check that the model c
 
 If you want even more detailed information, you can also print the actual C++ function that is used *under-the-hood* by specifying the `cpp_show_code=TRUE` argument to the `new_ode_model()` function.
 
-### More custom model options
+## More custom model options
 
 You can introduce new variables in your code, but you will have to define them using `declare_variables` argument too:
 
@@ -101,7 +101,7 @@ The `scale` can be either a parameter or a number, the `cmt` can only be a numbe
       dAdt[2] = -(CL/Vi) * A[2]
     ", obs = list(cmt = 2, scale = "V * (WT/70)"))
 
-### Custom model from file
+## Custom model from file
 
 The same syntax as explained above applies, but using the `file=` argument the input code is read from the specified file. This is just a convenience function, i.e. it allows you to modularize your code, and separate models and R code.
 

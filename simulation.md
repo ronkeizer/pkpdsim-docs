@@ -14,7 +14,7 @@ Output from this function looks e.g.:
 
 Below is a short description of the main arguments to `sim_ode`.
 
-### Observations
+## Observations
 
 By default, the observation times will include an observation every 1 hour. However, you can specify a vector of observation time:
 

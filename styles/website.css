@@ -1,5 +1,5 @@
 h1 {
-  color: #058495 ;
+  color: #266189;
 }
 
 h2, h3 {
@@ -7,11 +7,11 @@ h2, h3 {
 }
 
 .active a {
-  color: #058495 ;
+  color: #266189;
 }
 
 div.book-summary, div.book-summary nav {
-  background:  #058495;
+  background:  #266189;
   color: #fff;
 }
 
@@ -20,7 +20,10 @@ div.book-summary, div.book-summary nav {
 }*/
 
 #book-search-input {
-  background:  #047485 !important;
+  background:  #367199 !important;
+  color: #fff !important;
+}
+#book-search-input input {
   color: #fff !important;
 }
 

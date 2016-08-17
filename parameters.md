@@ -1,4 +1,4 @@
-## Parameters
+# Parameters
 
 Parameters are just specified as a `list` object in R. Example:
 

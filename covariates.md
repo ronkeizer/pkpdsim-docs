@@ -11,7 +11,7 @@ Covariates are implemented using the `new_covariate()` function, wrapped in a `n
 
 Note that the name in the list should correspond **exactly** with the name of the covariate in the model.
 
-### Time-varying covariates
+## Time-varying covariates
 
 Time-varing covariates, such as creatinine values can be implemented easily as well. They just require the additional `times` argument:
 

@@ -44,7 +44,7 @@ Which will administer the doses to compartments 1, 1, 2, 2, and 3, respectively 
 
 *Note: `PKPDsim` doesn't care about what unit the dose is in, you have to define this yourself in conjunction with the model code and observation scale.*
 
-### Steady state
+## Steady state
 
 Instead of simulating the full concentration time course for a give model,
 if you want to simulate the PK(PD) at steady state, you can also specify
