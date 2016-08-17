@@ -1,0 +1,3 @@
+{
+  "plugins": ["mathjax", "expandable-chapters", "toc"]
+}
