@@ -18,7 +18,7 @@ The custom model needs to be specified as a string or text block:
 
     pk1 <- new_ode_model(code = "
       dAdt[1] = -KA * A[1]
-      dAdt[2] = -(CL/V) * A[2]
+      dAdt[2] = +KA * A[1] -(CL/V) * A[2]
     ")
 
 The input code should adhere to the follow rules:
@@ -35,7 +35,7 @@ The input code is translated into a C++ function. You can check that the model c
 
       double   KEL = CL/V;
       dAdt[0] = -KA * A[0] + rate;
-      dAdt[1] = -KEL * A[1];
+      dAdt[1] = +KA * A[1] -KEL * A[1];
       ;
 
     Required parameters: CL, V, KA
@@ -52,7 +52,7 @@ You can introduce new variables in your code, but you will have to define them u
     pk1 <- new_ode_model(code = "
       KEL = CL/V
       dAdt[1] = -KA * A[1]
-      dAdt[2] = -KEL * A[2]
+      dAdt[2] = +KA * A[1] -KEL * A[2]
     ", declare_variables = c("KEL"))
 
 Also, when you want to use covariates in your ODE system (more info on how to define covariates is in the *Covariates* section), you will have to define them, both in the code and in the function call:
@@ -61,7 +61,7 @@ Also, when you want to use covariates in your ODE system (more info on how to de
       CLi = WT/70
       KEL = CLi/V
       dAdt[1] = -KA * A[1]
-      dAdt[2] = -(CL*(WT/70)/V) * A[2]
+      dAdt[2] = +KA * A[1] -(CL*(WT/70)/V) * A[2]
     ", declare_variables = c("KEL", ""), covariates = c("WT"))
 
 One exception to the input code syntax is the definition of power functions. `PKPDsim` does not translate those from the *pseudo-R* code to valid C++ syntax automatically. C/C++ does not use the `^` to indicate power functions but uses the `pow(value, base)` function instead, so e.g. an allometric model should be written as:
@@ -69,7 +69,7 @@ One exception to the input code syntax is the definition of power functions. `PK
     pk1 <- new_ode_model(code = "
       CLi = CL * pow((WT/70), 0.75)
       dAdt[1] = -KA * A[1]
-      dAdt[2] = -(CLi/V) * A[2]
+      dAdt[2] = +KA * A[1] -(CLi/V) * A[2]
     ", declare_variables = c("KEL", "CLi"))
 
 *Dosing*
@@ -78,7 +78,7 @@ The default dosing compartment and bioavailability can be specified using the `d
 
     pk1 <- new_ode_model(code = "
       dAdt[1] = -KA * A[1]
-      dAdt[2] = -(CL/V) * A[2]
+      dAdt[2] = +KA * A[1] -(CL/V) * A[2]
     ",
       dose = list(cmt = 1, bioav = "F1"))
 
@@ -88,7 +88,7 @@ The observation compartment can be set by specifying a list to the `obs` argumen
 
     pk1 <- new_ode_model(code = "
       dAdt[1] = -KA * A[1]
-      dAdt[2] = -(CL/V) * A[2]
+      dAdt[2] = +KA * A[1] -(CL/V) * A[2]
     ", obs = list(cmt = 2, scale = "V"))
 
 The `scale` can be either a parameter or a number, the `cmt` can only be a number.
@@ -98,7 +98,7 @@ The `scale` can be either a parameter or a number, the `cmt` can only be a numbe
     pk1 <- new_ode_model(code = "
       Vi = V * (WT/70)
       dAdt[1] = -KA * A[1]
-      dAdt[2] = -(CL/Vi) * A[2]
+      dAdt[2] = +KA * A[1] -(CL/Vi) * A[2]
     ", obs = list(cmt = 2, scale = "V * (WT/70)"))
 
 ## Custom model from file
