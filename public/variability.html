@@ -235,7 +235,7 @@
 
     
         
-        <li class="header">Examples</li>
+        <li class="header">More examples</li>
         
         
     
@@ -336,15 +336,27 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="between-subject-variability">Between subject-variability</h1><p>This can be implemented using the <code>n</code> and <code>omega</code> options. The <code>omega</code> should be specified as a vector defining the lower triagle of the BSV or Omega matrix (the <code>omega</code> nomenclature is borrowed from NONMEM). The following:</p><pre><code>dat &lt;- sim_ode(
-  ode = model,
-  parameters = parameters,
-  regimen = regimen,
-  n = 50,
-  omega = c(0.2 ,
+                                <h1 id="between-subject-variability">Between subject-variability</h1><p>This can be implemented using the <code>n</code> and <code>omega</code> options. The <code>omega</code> (the <code>omega</code> nomenclature is borrowed from NONMEM) should be specified as either a <strong>vector</strong> defining the lower triagle of the BSV or <script type="math/tex; ">\Omega</script> matrix, or as a <strong>matrix</strong> defining the full <script type="math/tex; ">\Omega</script> matrix. An alternative option is to specify the between-subject variability as CV, using the <code>cv_to_omega()</code> function.</p><p>The following:</p><pre><code>dat &lt;- sim_ode(
+  ode = model, parameters = parameters, regimen = regimen, n = 50,
+  omega = c(0.2,
             0.05, 0.1)
 )</code></pre>
-<p>will simulate out data for 50 patients, assuming an Omega matrix as defined above  (using only the lower triangle).</p>
+<p>will simulate out data for 50 patients, assuming an Omega matrix as defined above. ALternatively, the <script type="math/tex; ">\Omega</script> could also have been defined as:</p><pre><code>dat &lt;- sim_ode(
+  ode = model, parameters = parameters, regimen = regimen, n = 50,
+  omega = matrix(c(0.2, 0.05,
+                   0.05, 0.1), ncol=2)
+)</code></pre>
+<p>Or using the coefficient of variation and without correlation between parameters:</p><pre><code>dat &lt;- sim_ode(
+  ode = model, parameters = parameters, regimen = regimen, n = 50,
+  omega = cv_to_omega(list(CL = 0.1, V = 0.1))
+)</code></pre>
+<p>Note that using the <code>cv_to_omega</code> function assumes the <em>CV is on the SD-scale</em> and not on the variance scale (and the definition of CV uses the assumption <script type="math/tex; ">1 + \eta \approx 1 * \exp(\eta)</script>).</p><h2 id="variability-type">Variability type</h2><p>By default, PKPDsim will assume exponential distribution of all parameters if <code>omega</code> is specified. If normal distribution is desired for all parameters, please use the <code>omega_type=&quot;normal&quot;</code> argument:</p><pre><code>dat &lt;- sim_ode(
+  ode = model, parameters = parameters, regimen = regimen, n = 50,
+  omega = c(0.2,
+            0.05, 0.1),
+  omega_type = &quot;normal&quot;
+)</code></pre>
+<p><em>Note: at current, parameter distributions can only be all-exponential or all-normal. Future version of PKPDsim will allow specification per parameter.</em></p>
                                 
                                 </section>
                             
@@ -387,7 +399,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Variability","level":"2.6","depth":1,"next":{"title":"Covariates","level":"2.7","depth":1,"path":"covariates.md","ref":"covariates.md","articles":[]},"previous":{"title":"Simulation","level":"2.5","depth":1,"path":"simulation.md","ref":"simulation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"variability.md","mtime":"2016-08-17T17:11:26.140Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-10-07T16:26:10.382Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Variability","level":"2.6","depth":1,"next":{"title":"Covariates","level":"2.7","depth":1,"path":"covariates.md","ref":"covariates.md","articles":[]},"previous":{"title":"Simulation","level":"2.5","depth":1,"path":"simulation.md","ref":"simulation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"variability.md","mtime":"2016-11-04T18:55:52.827Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-11-04T19:36:42.206Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

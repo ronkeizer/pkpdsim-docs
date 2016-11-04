@@ -235,7 +235,7 @@
 
     
         
-        <li class="header">Examples</li>
+        <li class="header">More examples</li>
         
         
     
@@ -342,7 +342,17 @@
 </li>
 <li><code>file</code>: similar to <code>code</code>, but reads the code from a file
 </li></ul>
-<h1 id="model-from-library">Model from library</h1><p>E.g.:</p><pre><code>pk1 &lt;- new_ode_model(model = &quot;pk_1cmt_oral&quot;)</code></pre>
+<h2 id="model-from-library">Model from library</h2><p>For example, a 1-compartment oral PK model can be obtained using:</p><pre><code>pk1 &lt;- new_ode_model(model = &quot;pk_1cmt_oral&quot;)</code></pre>
+<p>Run the <code>new_ode_model()</code> function without arguments to see the currently available models:</p><pre><code>&gt; new_ode_model()
+  Either a model name (from the PKPDsim library), ODE code, an R function, or
+  a file containing code for the ODE system have to be supplied to this function.
+  The following models are available:
+  pk_1cmt_iv
+  pk_1cmt_iv_auc
+  pk_1cmt_iv_mm
+  pk_2cmt_iv
+  pk_2cmt_iv_auc
+  pk_1cmt_oral</code></pre>
 <h2 id="custom-model-from-code">Custom model from code</h2><p>The custom model needs to be specified as a string or text block:</p><pre><code>pk1 &lt;- new_ode_model(code = &quot;
   dAdt[1] = -KA * A[1]
   dAdt[2] = +KA * A[1] -(CL/V) * A[2]
@@ -444,7 +454,7 @@ Dependent variable scaling: 1</code></pre>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Model","level":"2.2","depth":1,"next":{"title":"Regimen","level":"2.3","depth":1,"path":"regimen.md","ref":"regimen.md","articles":[]},"previous":{"title":"General","level":"2.1","depth":1,"path":"documentation.md","ref":"documentation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"model.md","mtime":"2016-09-13T22:14:25.091Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-10-07T16:26:10.382Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Model","level":"2.2","depth":1,"next":{"title":"Regimen","level":"2.3","depth":1,"path":"regimen.md","ref":"regimen.md","articles":[]},"previous":{"title":"General","level":"2.1","depth":1,"path":"documentation.md","ref":"documentation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"model.md","mtime":"2016-11-04T19:00:02.200Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-11-04T19:36:42.206Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

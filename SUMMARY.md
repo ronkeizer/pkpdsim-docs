@@ -13,7 +13,7 @@
 * [Covariates](covariates.md)
 * [Plotting](plotting.md)
 
-## Examples
+## More examples
 
 * [Absorption lagtime](example-absorption-lagtime.md)
 * [Transit compartments](example-absorption-transit.md)
