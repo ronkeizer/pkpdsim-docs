@@ -8,15 +8,7 @@ The `sim_ode()` function will combine the model, the parameters, and the regimen
       regimen = regimen         # created using new_regimen
     )
 
-Output from this function looks e.g.:
-
-    data
-
-Below is a short description of the main arguments to `sim_ode`.
-
-## Observations
-
-By default, the observation times will include an observation every 1 hour. However, you can specify a vector of observation time:
+By default, the observation times will include an observation every 1 hour. However, you can specify a vector of observation times to get only those observations:
 
     dat <- sim_ode(
       ode = model,
@@ -25,8 +17,21 @@ By default, the observation times will include an observation every 1 hour. Howe
       t_obs = c(0.5, 2, 4, 8, 12, 16, 24)
     )
 
-Also, using the code above, `sim_ode()` will return a `data.frame` with the data for all compartments.
+## Output
+
+Using the code above, `sim_ode()` will return a `data.frame` with the data for all compartments.
 If you are only interested in the observed data (i.e. the concenttions in the case of PK), you can filter those out
 by specifying the `only_obs = TRUE` option (or filter them out manually by comparment, of course). Please note that the
 `comp` column in the dataset will have the indices for all the compartments, as well as an extra set of rows for the `"obs"`
  (observation) data, which is scaled by the scaling factor specified in the model.
+
+ ## Parameters and covariates
+
+ Especially if covariates and between-subject variability is included in the simulation, it is often useful to include these in the output table as well. Use the `output_include` argument for this:
+
+    dat <- sim(pk1, parameters = p, regimen = reg,
+      covariates_table = cov_table,
+      covariates_implementation = list(SCR = "interpolate"),
+      omega = c(0.1, 0.05, 0.1), n_ind = 50,
+      output_include = list(parameters = TRUE, covariates=TRUE)
+    )

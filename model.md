@@ -6,11 +6,24 @@
 - `code`: using code specyfing derivatives for ODE specified in *pseudo-R* code
 - `file`: similar to `code`, but reads the code from a file
 
-# Model from library
+## Model from library
 
-E.g.:
+For example, a 1-compartment oral PK model can be obtained using:
 
     pk1 <- new_ode_model(model = "pk_1cmt_oral")
+
+Run the `new_ode_model()` function without arguments to see the currently available models:
+
+    > new_ode_model()
+      Either a model name (from the PKPDsim library), ODE code, an R function, or
+      a file containing code for the ODE system have to be supplied to this function.
+      The following models are available:
+      pk_1cmt_iv
+      pk_1cmt_iv_auc
+      pk_1cmt_iv_mm
+      pk_2cmt_iv
+      pk_2cmt_iv_auc
+      pk_1cmt_oral
 
 ## Custom model from code
 
