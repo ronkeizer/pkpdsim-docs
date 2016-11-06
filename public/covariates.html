@@ -359,6 +359,39 @@
 3   60  110   0</code></pre>
 <p>The <code>id</code> and <code>t</code> (time) columns can be omitted when only static covariates are to be used. Make sure that the headers used for the covariates match <em>exactly</em> with the covariate names specified in the model definition.</p><p>With the above <code>data.frame</code> called <code>cov_table</code>, the call to <code>sim_ode()</code> would then become:</p><pre><code>sim_ode(ode = model, parameters = parameters, regimen = regimen,
         covariates_table = cov_table)</code></pre>
+<p>A full example for a model with (simulated) covariates for a patient population would be:</p><pre><code>library(PKPDsim)
+parameters &lt;- list(CL = 1,
+             V  = 10,
+             KA = 0.5)
+
+n_ind &lt;- 50
+cov_table &lt;- data.frame(&apos;id&apos; = 1:n_ind,
+                        &apos;WT&apos; = rnorm(n_ind, mean = 70, sd = 5))
+
+model &lt;- new_ode_model(
+  code = &apos;
+     CLi = CL * pow((WT/70), 0.75)
+     Vi  = V * (WT/70)
+     dAdt[1] = -KA*A[1]
+     dAdt[2] =  KA*A[1] -(CLi/Vi)*A[2]
+   &apos;,
+   declare_variables = c(&apos;CLi&apos;, &apos;Vi&apos;),
+   covariates = c(&apos;WT&apos;),
+   dose = list(cmt = 1),
+   obs  = list(cmt = 2, scale = &apos;V * (WT/70)&apos;)
+)
+
+regimen &lt;- new_regimen(amt  = 30,
+                       n    = 4,
+                       type = &apos;bolus&apos;)
+
+dat &lt;- sim(ode        = &apos;model&apos;,
+           par        = parameters,
+           t_obs      = c(0.5, 2, 4, 8, 12, 16, 24),
+           n_ind      = n_ind,
+           regimen    = regimen,
+           covariates_table = cov_table,
+           output_include = list(covariates=TRUE))</code></pre>
 <p><em>Note: at current, PKPDsim does not handle missing covariate values. If you do have missing covariate data, probably the best approach would be to impute the values manually before simulation, e.g. based on the mean observed / known value, or the correlation between the covariates.</em></p>
                                 
                                 </section>
@@ -402,7 +435,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Covariates","level":"2.7","depth":1,"next":{"title":"Plotting","level":"2.8","depth":1,"path":"plotting.md","ref":"plotting.md","articles":[]},"previous":{"title":"Variability","level":"2.6","depth":1,"path":"variability.md","ref":"variability.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"covariates.md","mtime":"2016-11-04T18:27:29.031Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-11-04T19:36:42.206Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Covariates","level":"2.7","depth":1,"next":{"title":"Plotting","level":"2.8","depth":1,"path":"plotting.md","ref":"plotting.md","articles":[]},"previous":{"title":"Variability","level":"2.6","depth":1,"path":"variability.md","ref":"variability.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"covariates.md","mtime":"2016-11-06T06:46:56.800Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-11-06T06:47:14.278Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

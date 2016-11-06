@@ -75,7 +75,7 @@ Also, when you want to use covariates in your ODE system (more info on how to de
       KEL = CLi/V
       dAdt[1] = -KA * A[1]
       dAdt[2] = +KA * A[1] -(CL*(WT/70)/V) * A[2]
-    ", declare_variables = c("KEL", ""), covariates = c("WT"))
+    ", declare_variables = c("KEL", "CLi"), covariates = c("WT"))
 
 One exception to the input code syntax is the definition of power functions. `PKPDsim` does not translate those from the *pseudo-R* code to valid C++ syntax automatically. C/C++ does not use the `^` to indicate power functions but uses the `pow(value, base)` function instead, so e.g. an allometric model should be written as:
 
@@ -83,7 +83,7 @@ One exception to the input code syntax is the definition of power functions. `PK
       CLi = CL * pow((WT/70), 0.75)
       dAdt[1] = -KA * A[1]
       dAdt[2] = +KA * A[1] -(CLi/V) * A[2]
-    ", declare_variables = c("KEL", "CLi"))
+    ", declare_variables = c("CLi"))
 
 *Dosing*
 

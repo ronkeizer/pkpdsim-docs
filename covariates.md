@@ -45,4 +45,41 @@ With the above `data.frame` called `cov_table`, the call to `sim_ode()` would th
     sim_ode(ode = model, parameters = parameters, regimen = regimen,
             covariates_table = cov_table)
 
+A full example for a model with (simulated) covariates for a patient population would be:
+
+    library(PKPDsim)
+    parameters <- list(CL = 1,
+                 V  = 10,
+                 KA = 0.5)
+
+    n_ind <- 50
+    cov_table <- data.frame('id' = 1:n_ind,
+                            'WT' = rnorm(n_ind, mean = 70, sd = 5))
+
+    model <- new_ode_model(
+      code = '
+         CLi = CL * pow((WT/70), 0.75)
+         Vi  = V * (WT/70)
+         dAdt[1] = -KA*A[1]
+         dAdt[2] =  KA*A[1] -(CLi/Vi)*A[2]
+       ',
+       declare_variables = c('CLi', 'Vi'),
+       covariates = c('WT'),
+       dose = list(cmt = 1),
+       obs  = list(cmt = 2, scale = 'V * (WT/70)')
+    )
+
+    regimen <- new_regimen(amt  = 30,
+                           n    = 4,
+                           type = 'bolus')
+
+    dat <- sim(ode        = 'model',
+               par        = parameters,
+               t_obs      = c(0.5, 2, 4, 8, 12, 16, 24),
+               n_ind      = n_ind,
+               regimen    = regimen,
+               covariates_table = cov_table,
+               output_include = list(covariates=TRUE))
+
+
 *Note: at current, PKPDsim does not handle missing covariate values. If you do have missing covariate data, probably the best approach would be to impute the values manually before simulation, e.g. based on the mean observed / known value, or the correlation between the covariates.*
