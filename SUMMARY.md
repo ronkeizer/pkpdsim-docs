@@ -12,6 +12,7 @@
 * [Variability](variability.md)
 * [Covariates](covariates.md)
 * [Plotting](plotting.md)
+* [Export model](export-model.md)
 
 ## More examples
 
