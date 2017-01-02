@@ -4,11 +4,9 @@
 
 At current, `PKPDsim` is not yet on CRAN (but it will be released to there soon). So you cannot use `install.packages()` yet to install it. However, the package can be installed directly from GitHub when you have the `devtools` package installed:
 
-<% code("bash") do %>
-library(devtools)
-install_github("ronkeizer/PKPDsim")
-library(PKPDsim)
-<% end %>
+    library(devtools)
+    install_github("ronkeizer/PKPDsim")
+    library(PKPDsim)
 
 ## First simulation
 
