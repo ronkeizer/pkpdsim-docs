@@ -24,9 +24,8 @@ Below is an example of a simple indirect-response model. With PK-PD models, the 
     ggplot(dat, aes(x=t, y=y, colour=factor(id))) +
       geom_line() +
       scale_colour_discrete(guide=FALSE) +
-      facet_wrap(~comp, scales="free") +
-      theme_empty()
-
+      facet_wrap(~comp, scales="free")
+      
 ## Combine PK and PD models
 
 As shown above, a PK-PD model can be written as a single set of differential equations. However, we often develop PK and PD models separately and e.g. want to plug various PK models into existing PD models. This can be done easily in `PKPDsim` by specifying the model parts in a list to the `code` argument:

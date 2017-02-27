@@ -44,5 +44,4 @@ To check whether our simulation actually produced results, let's plot it (instal
 
     ggplot(dat, aes(x=t, y=y)) +
       geom_line() +
-      facet_wrap(~comp) +
-      theme_empty()
+      facet_wrap(~comp) 
