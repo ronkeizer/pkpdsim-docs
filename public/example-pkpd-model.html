@@ -354,7 +354,7 @@
 
 pkpd &lt;- new_ode_model(
   code = &quot;
-    dAdt[1] = -(CL/V) * A[1] + rate
+    dAdt[1] = -(CL/V) * A[1];
     conc = A[1]/V;
     dAdt[2] = KIN * 1/(1+EFF*conc) - KOUT*A[2];
   &quot;,
@@ -371,10 +371,9 @@ dat &lt;- sim_ode (ode = &quot;pkpd&quot;,
 ggplot(dat, aes(x=t, y=y, colour=factor(id))) +
   geom_line() +
   scale_colour_discrete(guide=FALSE) +
-  facet_wrap(~comp, scales=&quot;free&quot;) +
-  theme_empty()</code></pre>
+  facet_wrap(~comp, scales=&quot;free&quot;)</code></pre>
 <h2 id="combine-pk-and-pd-models">Combine PK and PD models</h2><p>As shown above, a PK-PD model can be written as a single set of differential equations. However, we often develop PK and PD models separately and e.g. want to plug various PK models into existing PD models. This can be done easily in <code>PKPDsim</code> by specifying the model parts in a list to the <code>code</code> argument:</p><pre><code>pkpd &lt;- new_ode_model(code = list(pk = &quot;
-                                    dAdt[1] = -(CL/V) * A[1] + rate;
+                                    dAdt[1] = -(CL/V) * A[1];
                                     conc = A[1]/V;
                                   &quot;,
                                   pd = &quot;
@@ -424,7 +423,7 @@ ggplot(dat, aes(x=t, y=y, colour=factor(id))) +
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PKPD model","level":"3.3","depth":1,"next":{"title":"Shiny app","level":"3.4","depth":1,"path":"example-shiny-app.md","ref":"example-shiny-app.md","articles":[]},"previous":{"title":"Transit compartments","level":"3.2","depth":1,"path":"example-absorption-transit.md","ref":"example-absorption-transit.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"example-pkpd-model.md","mtime":"2016-08-17T16:52:29.991Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-01-02T06:28:05.352Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PKPD model","level":"3.3","depth":1,"next":{"title":"Shiny app","level":"3.4","depth":1,"path":"example-shiny-app.md","ref":"example-shiny-app.md","articles":[]},"previous":{"title":"Transit compartments","level":"3.2","depth":1,"path":"example-absorption-transit.md","ref":"example-absorption-transit.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"example-pkpd-model.md","mtime":"2017-03-31T03:52:27.607Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-03-31T03:53:29.730Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
