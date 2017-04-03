@@ -9,6 +9,7 @@
 * [Regimen](regimen.md)
 * [Parameters](parameters.md)
 * [Simulation](simulation.md)
+* [Output](output.md)
 * [Variability](variability.md)
 * [Covariates](covariates.md)
 * [Plotting](plotting.md)
