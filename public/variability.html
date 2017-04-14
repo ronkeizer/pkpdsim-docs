@@ -384,12 +384,14 @@
 )</code></pre>
 <p><em>Note: at current, parameter distributions can only be all-exponential or all-normal. Future version of PKPDsim will allow specification per parameter.</em></p><h2 id="more-flexible-variability-models">More flexible variability models</h2><p>To allow more flexibility in how between-subject variability enters the model, there is an alternative way of specifying variability. This approach is very similar to the way variability is encoded in NONMEM, i.e. variability components (<em>eta&apos;s</em>) are added explicitly in the model code. In <code>PKPDsim</code> this means that <em>eta&apos;s</em> should be treated just like regular parameters, but with <code>0</code> mean and normal distribution. See example below for the simulation of bioavailability (using the logit-distribution):</p><pre><code>library(PKPDsim)
 mod1 &lt;- new_ode_model(code = &quot;
-  CLi = CL * exp(eta1)
-  Vi = V * exp(eta2)
-  F1i =  exp(F1 + eta3) / (1 + exp(F1 + eta3))
-  dAdt[1] = -KA * A[1]
-  dAdt[2] = KA * A[1] - (CL/V) * A[2]
-&quot;, declare_variables = c(&quot;CLi&quot;, &quot;Vi&quot;, &quot;F1i&quot;), obs = list(cmt = 2, scale = &quot;V * exp(eta2)&quot;))
+                      CLi = CL * exp(eta1)
+                      Vi = V * exp(eta2)
+                      F1i =  exp(F1 + eta3) / (1 + exp(F1 + eta3))
+                      dAdt[1] = -KA * A[1]
+                      dAdt[2] = KA * A[1] - (CL/V) * A[2]
+                      &quot;, declare_variables = c(&quot;CLi&quot;, &quot;Vi&quot;, &quot;F1i&quot;),
+                      obs = list(cmt = 2, scale = &quot;V * exp(eta2)&quot;),
+                      dose = list(cmt = 1, scale = &quot;F1i&quot;))
 reg1 &lt;- new_regimen(amt = 100, n = 2, interval = 12, type=&quot;oral&quot;)
 
 dat &lt;- sim_ode (
@@ -403,11 +405,12 @@ dat &lt;- sim_ode (
             0, 0, 0.1),
   n = 100,
   omega_type = &quot;normal&quot;,
-  output_include = list(&quot;parameters&quot; = TRUE), only_obs = TRUE
+  output_include = list(&quot;parameters&quot; = TRUE, variables=TRUE), only_obs = TRUE
 )
 
 library(ggplot2)
-ggplot(dat, aes(x = t, y = y, group=id)) + geom_line()</code></pre>
+ggplot(dat, aes(x = t, y = y, group=id)) + geom_line()
+ggplot(dat, aes(x = F1i)) + geom_histogram()</code></pre>
 
                                 
                                 </section>
@@ -451,7 +454,7 @@ ggplot(dat, aes(x = t, y = y, group=id)) + geom_line()</code></pre>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Variability","level":"2.7","depth":1,"next":{"title":"Covariates","level":"2.8","depth":1,"path":"covariates.md","ref":"covariates.md","articles":[]},"previous":{"title":"Output","level":"2.6","depth":1,"path":"output.md","ref":"output.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"variability.md","mtime":"2017-04-03T04:09:18.621Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-04-03T18:18:07.557Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Variability","level":"2.7","depth":1,"next":{"title":"Covariates","level":"2.8","depth":1,"path":"covariates.md","ref":"covariates.md","articles":[]},"previous":{"title":"Output","level":"2.6","depth":1,"path":"output.md","ref":"output.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"variability.md","mtime":"2017-04-14T17:50:58.344Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-04-14T17:51:21.463Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

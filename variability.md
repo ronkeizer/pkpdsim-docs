@@ -47,12 +47,14 @@ To allow more flexibility in how between-subject variability enters the model, t
 
     library(PKPDsim)
     mod1 <- new_ode_model(code = "
-      CLi = CL * exp(eta1)
-      Vi = V * exp(eta2)
-      F1i =  exp(F1 + eta3) / (1 + exp(F1 + eta3))
-      dAdt[1] = -KA * A[1]
-      dAdt[2] = KA * A[1] - (CL/V) * A[2]
-    ", declare_variables = c("CLi", "Vi", "F1i"), obs = list(cmt = 2, scale = "V * exp(eta2)"))
+                          CLi = CL * exp(eta1)
+                          Vi = V * exp(eta2)
+                          F1i =  exp(F1 + eta3) / (1 + exp(F1 + eta3))
+                          dAdt[1] = -KA * A[1]
+                          dAdt[2] = KA * A[1] - (CL/V) * A[2]
+                          ", declare_variables = c("CLi", "Vi", "F1i"),
+                          obs = list(cmt = 2, scale = "V * exp(eta2)"),
+                          dose = list(cmt = 1, scale = "F1i"))
     reg1 <- new_regimen(amt = 100, n = 2, interval = 12, type="oral")
 
     dat <- sim_ode (
@@ -66,8 +68,9 @@ To allow more flexibility in how between-subject variability enters the model, t
                 0, 0, 0.1),
       n = 100,
       omega_type = "normal",
-      output_include = list("parameters" = TRUE), only_obs = TRUE
+      output_include = list("parameters" = TRUE, variables=TRUE), only_obs = TRUE
     )
 
     library(ggplot2)
     ggplot(dat, aes(x = t, y = y, group=id)) + geom_line()
+    ggplot(dat, aes(x = F1i)) + geom_histogram()
