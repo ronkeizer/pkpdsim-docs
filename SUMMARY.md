@@ -14,6 +14,7 @@
 * [Covariates](covariates.md)
 * [Plotting](plotting.md)
 * [Export model](export-model.md)
+* [Speed](speed.md)
 
 ## More examples
 
