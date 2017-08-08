@@ -5,9 +5,9 @@ can be done with the `res_var` argument to the `sim()` function.
 This argument requires a `list()` with one or more of the
 following components:
 
-- `prop`: proportional error: $$y = y \cdot (1 + \mathcal{N}(0, prop))$$
-- `add`: additive error: $$y = y + \mathcal{N}(0, add))$$
-- `exp`: exponential error: $$y = y \cdot e^{\mathcal{N}(0, exp)}$$
+- `prop`: proportional error: $$y = \hat{y} \cdot (1 + \mathcal{N}(0, prop))$$
+- `add`: additive error: $$y = \hat{y} + \mathcal{N}(0, add))$$
+- `exp`: exponential error: $$y = \hat{y} \cdot e^{\mathcal{N}(0, exp)}$$
 
 These list elements can be combined, e.g. for a combined proportional and additive
 error model one would write e.g.: `res_var = list(prop = 0.1, add = 1)`, which
