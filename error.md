@@ -1,8 +1,8 @@
 # Residual error
 
-PKPDsim has functionality to simulate residual errors on top of your observed data.
-The `res_var` argument to the `sim()` function can be used specify the
-residual error. This argument requires a `list()` with one or more of the
+PKPDsim can simulate residual errors on top of your observed data, which
+can be done with the `res_var` argument to the `sim()` function.
+This argument requires a `list()` with one or more of the
 following components:
 
 - `prop`: proportional error: $$y = y \cdot (1 + \mathcal{N}(0, prop))$$
