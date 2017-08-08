@@ -51,7 +51,7 @@ To allow more flexibility in how between-subject variability enters the model, t
                           Vi = V * exp(eta2)
                           F1i =  exp(F1 + eta3) / (1 + exp(F1 + eta3))
                           dAdt[1] = -KA * A[1]
-                          dAdt[2] = KA * A[1] - (CL/V) * A[2]
+                          dAdt[2] = KA * A[1] - (CLi/Vi) * A[2]
                           ", declare_variables = c("CLi", "Vi", "F1i"),
                           obs = list(cmt = 2, scale = "V * exp(eta2)"),
                           dose = list(cmt = 1, scale = "F1i"))

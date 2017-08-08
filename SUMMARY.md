@@ -11,6 +11,7 @@
 * [Simulation](simulation.md)
 * [Output](output.md)
 * [Variability](variability.md)
+* [Residual error](error.md)
 * [Covariates](covariates.md)
 * [Plotting](plotting.md)
 * [Export model](export-model.md)

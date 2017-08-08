@@ -2,7 +2,7 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>PKPD model · GitBook</title>
+        <title>Residual error · GitBook</title>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -63,10 +63,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="example-shiny-app.html" />
+    <link rel="next" href="covariates.html" />
     
     
-    <link rel="prev" href="example-absorption-transit.html" />
+    <link rel="prev" href="variability.html" />
     
 
     </head>
@@ -219,7 +219,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.8" data-path="error.html">
+        <li class="chapter active" data-level="2.8" data-path="error.html">
             
                 <a href="error.html">
             
@@ -317,7 +317,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="3.3" data-path="example-pkpd-model.html">
+        <li class="chapter " data-level="3.3" data-path="example-pkpd-model.html">
             
                 <a href="example-pkpd-model.html">
             
@@ -373,7 +373,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >PKPD model</a>
+        <a href="." >Residual error</a>
     </h1>
 </div>
 
@@ -388,37 +388,38 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="example-pkpd-model">Example: PKPD model</h1><p>Below is an example of a simple indirect-response model. With PK-PD models, the inital state of the PD system often depends on specific model parts. We can define the state of the ODE system statically using the <code>A_init=</code> argument, but this will not any (individual) parameters into account. However, we can also define initial states dynamically using the <code>state_init</code> argument, so that for each inidividual the desired initial state will be calculated:</p><pre><code>p_pkpd &lt;- list(CL = 5, V  = 50,
-               KIN = .02, KOUT=.5, EFF = 0.2)
+                                <h1 id="residual-error">Residual error</h1><p>PKPDsim has functionality to simulate residual errors on top of your observed data.
+The <code>res_var</code> argument to the <code>sim()</code> function can be used specify the
+residual error. This argument requires a <code>list()</code> with one or more of the
+following components:</p><ul><li><code>prop</code>: proportional error: <script type="math/tex; ">y = y \cdot (1 + \mathcal{N}(0, prop))</script>
+</li>
+<li><code>add</code>: additive error: <script type="math/tex; ">y = y + \mathcal{N}(0, add))</script>
+</li>
+<li><code>exp</code>: exponential error: <script type="math/tex; ">y = y \cdot e^{\mathcal{N}(0, exp)}</script>
+</li></ul>
+<p>These list elements can be combined, e.g. for a combined proportional and additive
+error model one would write e.g.: <code>res_var = list(prop = 0.1, add = 1)</code>, which
+would give a 10% proportional error plus an additive error of 1 concentration unit.</p><p>Below are some examples of the <code>res_var</code> argument</p><pre><code>library(PKPDsim)
+library(ggplot2)
 
-pkpd &lt;- new_ode_model(
-  code = &quot;
-    dAdt[1] = -(CL/V) * A[1];
-    conc = A[1]/V;
-    dAdt[2] = KIN * 1/(1+EFF*conc) - KOUT*A[2];
-  &quot;,
-  state_init = &quot;A[2] = KIN/KOUT;&quot;
-)
+mod &lt;- new_ode_model(&quot;pk_1cmt_iv&quot;)
+reg &lt;- new_regimen(amt = 1000, n = 5, interval = 12, type = &quot;bolus&quot;)
 
-dat &lt;- sim_ode (ode = &quot;pkpd&quot;,
-                n_ind = 25,
-                omega = cv_to_omega(par_cv = list(&quot;CL&quot;=0.1, &quot;V&quot;=0.1, &quot;KIN&quot; = .05, &quot;KOUT&quot;= 0.1), p),
-                par = p_pkpd,
-                regimen = r1,
-                verbose = FALSE)
+## Combined proportional and additive
+sim2 &lt;- sim(mod, parameters = list(CL = 5, V = 150),
+            res_var = list(prop = 0.1, add = 1),
+            regimen = reg, only_obs=TRUE)
+ggplot(sim2, aes(x=t, y=y)) + geom_point()
 
-ggplot(dat, aes(x=t, y=y, colour=factor(id))) +
-  geom_line() +
-  scale_colour_discrete(guide=FALSE) +
-  facet_wrap(~comp, scales=&quot;free&quot;)</code></pre>
-<h2 id="combine-pk-and-pd-models">Combine PK and PD models</h2><p>As shown above, a PK-PD model can be written as a single set of differential equations. However, we often develop PK and PD models separately and e.g. want to plug various PK models into existing PD models. This can be done easily in <code>PKPDsim</code> by specifying the model parts in a list to the <code>code</code> argument:</p><pre><code>pkpd &lt;- new_ode_model(code = list(pk = &quot;
-                                    dAdt[1] = -(CL/V) * A[1];
-                                    conc = A[1]/V;
-                                  &quot;,
-                                  pd = &quot;
-                                    dAdt[1] = KIN * 1/(1+EFF*conc) - KOUT*A[1];
-                                  &quot;),
-                      state_init = list(pd = &quot;A[1] = KIN/KOUT;&quot;))</code></pre>
+## Exponential
+sim2 &lt;- sim(mod, parameters = list(CL = 5, V = 150),
+            res_var = list(exp = 0.1),
+            regimen = reg, only_obs=TRUE)
+ggplot(sim2, aes(x=t, y=y)) + geom_point()</code></pre>
+<p>Besides including the residual error at simulation time, there is also the option to
+include it afterwards. For that, the function <code>add_ruv()</code> is useful</p><pre><code>sim3 &lt;- sim1
+sim3$y &lt;- PKPDsim:::add_ruv(sim3$y, list(prop = 0.1, add = 1))
+ggplot(sim3, aes(x=t, y=y)) + geom_point()</code></pre>
 
                                 
                                 </section>
@@ -446,12 +447,12 @@ ggplot(dat, aes(x=t, y=y, colour=factor(id))) +
 
             
                 
-                <a href="example-absorption-transit.html" class="navigation navigation-prev " aria-label="Previous page: Transit compartments">
+                <a href="variability.html" class="navigation navigation-prev " aria-label="Previous page: Variability">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="example-shiny-app.html" class="navigation navigation-next " aria-label="Next page: Shiny app">
+                <a href="covariates.html" class="navigation navigation-next " aria-label="Next page: Covariates">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -462,7 +463,7 @@ ggplot(dat, aes(x=t, y=y, colour=factor(id))) +
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PKPD model","level":"3.3","depth":1,"next":{"title":"Shiny app","level":"3.4","depth":1,"path":"example-shiny-app.md","ref":"example-shiny-app.md","articles":[]},"previous":{"title":"Transit compartments","level":"3.2","depth":1,"path":"example-absorption-transit.md","ref":"example-absorption-transit.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"example-pkpd-model.md","mtime":"2017-03-31T03:52:27.607Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-08-08T20:39:42.181Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Residual error","level":"2.8","depth":1,"next":{"title":"Covariates","level":"2.9","depth":1,"path":"covariates.md","ref":"covariates.md","articles":[]},"previous":{"title":"Variability","level":"2.7","depth":1,"path":"variability.md","ref":"variability.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"error.md","mtime":"2017-08-08T20:38:40.204Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-08-08T20:39:42.181Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
