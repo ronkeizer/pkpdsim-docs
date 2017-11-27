@@ -2,12 +2,12 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>PKPD model · GitBook</title>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>PKPD model · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="generator" content="GitBook 3.2.3">
         
         
         
@@ -284,6 +284,19 @@
             
         </li>
     
+        <li class="chapter " data-level="2.13" data-path="estimation_nlmixr.html">
+            
+                <a href="estimation_nlmixr.html">
+            
+                    
+                    Estimation: nlmixr
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
         
@@ -388,7 +401,9 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="example-pkpd-model">Example: PKPD model</h1><p>Below is an example of a simple indirect-response model. With PK-PD models, the inital state of the PD system often depends on specific model parts. We can define the state of the ODE system statically using the <code>A_init=</code> argument, but this will not any (individual) parameters into account. However, we can also define initial states dynamically using the <code>state_init</code> argument, so that for each inidividual the desired initial state will be calculated:</p><pre><code>p_pkpd &lt;- list(CL = 5, V  = 50,
+                                <h1 id="example-pkpd-model">Example: PKPD model</h1>
+<p>Below is an example of a simple indirect-response model. With PK-PD models, the inital state of the PD system often depends on specific model parts. We can define the state of the ODE system statically using the <code>A_init=</code> argument, but this will not any (individual) parameters into account. However, we can also define initial states dynamically using the <code>state_init</code> argument, so that for each inidividual the desired initial state will be calculated:</p>
+<pre><code>p_pkpd &lt;- list(CL = 5, V  = 50,
                KIN = .02, KOUT=.5, EFF = 0.2)
 
 pkpd &lt;- new_ode_model(
@@ -410,16 +425,18 @@ dat &lt;- sim_ode (ode = &quot;pkpd&quot;,
 ggplot(dat, aes(x=t, y=y, colour=factor(id))) +
   geom_line() +
   scale_colour_discrete(guide=FALSE) +
-  facet_wrap(~comp, scales=&quot;free&quot;)</code></pre>
-<h2 id="combine-pk-and-pd-models">Combine PK and PD models</h2><p>As shown above, a PK-PD model can be written as a single set of differential equations. However, we often develop PK and PD models separately and e.g. want to plug various PK models into existing PD models. This can be done easily in <code>PKPDsim</code> by specifying the model parts in a list to the <code>code</code> argument:</p><pre><code>pkpd &lt;- new_ode_model(code = list(pk = &quot;
+  facet_wrap(~comp, scales=&quot;free&quot;)
+</code></pre><h2 id="combine-pk-and-pd-models">Combine PK and PD models</h2>
+<p>As shown above, a PK-PD model can be written as a single set of differential equations. However, we often develop PK and PD models separately and e.g. want to plug various PK models into existing PD models. This can be done easily in <code>PKPDsim</code> by specifying the model parts in a list to the <code>code</code> argument:</p>
+<pre><code>pkpd &lt;- new_ode_model(code = list(pk = &quot;
                                     dAdt[1] = -(CL/V) * A[1];
                                     conc = A[1]/V;
                                   &quot;,
                                   pd = &quot;
                                     dAdt[1] = KIN * 1/(1+EFF*conc) - KOUT*A[1];
                                   &quot;),
-                      state_init = list(pd = &quot;A[1] = KIN/KOUT;&quot;))</code></pre>
-
+                      state_init = list(pd = &quot;A[1] = KIN/KOUT;&quot;))
+</code></pre>
                                 
                                 </section>
                             
@@ -462,7 +479,7 @@ ggplot(dat, aes(x=t, y=y, colour=factor(id))) +
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PKPD model","level":"3.3","depth":1,"next":{"title":"Shiny app","level":"3.4","depth":1,"path":"example-shiny-app.md","ref":"example-shiny-app.md","articles":[]},"previous":{"title":"Transit compartments","level":"3.2","depth":1,"path":"example-absorption-transit.md","ref":"example-absorption-transit.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"example-pkpd-model.md","mtime":"2017-03-31T03:52:27.607Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-08-08T20:43:57.149Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PKPD model","level":"3.3","depth":1,"next":{"title":"Shiny app","level":"3.4","depth":1,"path":"example-shiny-app.md","ref":"example-shiny-app.md","articles":[]},"previous":{"title":"Transit compartments","level":"3.2","depth":1,"path":"example-absorption-transit.md","ref":"example-absorption-transit.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"example-pkpd-model.md","mtime":"2017-03-31T03:52:27.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-27T19:09:57.472Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

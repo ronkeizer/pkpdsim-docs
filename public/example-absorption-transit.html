@@ -2,12 +2,12 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>Transit compartments · GitBook</title>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Transit compartments · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="generator" content="GitBook 3.2.3">
         
         
         
@@ -284,6 +284,19 @@
             
         </li>
     
+        <li class="chapter " data-level="2.13" data-path="estimation_nlmixr.html">
+            
+                <a href="estimation_nlmixr.html">
+            
+                    
+                    Estimation: nlmixr
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
         
@@ -388,7 +401,10 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="absorption-transit-compartments">Absorption transit compartments</h1><p>The code below implements the transit compartment model for absorption compartments as described by Savic et al. JPKPD 2007. Please note that this implementation assumes that all drug amount has been absorbed within the dosing interval. Such an assumption might not always hold. Also, for this implementation of dosing, it is essentioal to set the bioavailability for the dose compartment to 0, since dosing is now implemented using a separate analytical equation.</p><p><em>Note: a simplified way of coding the transit compartments model will be added soon to PKPDsim.</em></p><pre><code>library(PKPDsim)
+                                <h1 id="absorption-transit-compartments">Absorption transit compartments</h1>
+<p>The code below implements the transit compartment model for absorption compartments as described by Savic et al. JPKPD 2007. Please note that this implementation assumes that all drug amount has been absorbed within the dosing interval. Such an assumption might not always hold. Also, for this implementation of dosing, it is essentioal to set the bioavailability for the dose compartment to 0, since dosing is now implemented using a separate analytical equation.</p>
+<p><em>Note: a simplified way of coding the transit compartments model will be added soon to PKPDsim.</em></p>
+<pre><code>library(PKPDsim)
 library(PKPDplot)
 
 parameters &lt;- list(CL = 15, V = 50, MTT = 2.5, N = 4, KA = 1)
@@ -406,8 +422,9 @@ mod &lt;- new_ode_model(code = &quot;
 
 sim_ode(ode = mod, regimen = reg1, parameters = parameters, n = 50,
         omega = cv_to_omega(list(CL = 0.1, V = 0.1, MTT = 0.2, N =0.1, KA=0.1), parameters),
-        t_obs = seq(0, 36, .5)) %&gt;% plot()</code></pre>
-<p><img alt="Transit_cmt" src="assets/images/transit_cmts.png"></p>
+        t_obs = seq(0, 36, .5)) %&gt;% plot()
+</code></pre><p><img src="assets/images/transit_cmts.png" alt="Transit_cmt" title="Transit compartments absorption"></p>
+
                                 
                                 </section>
                             
@@ -450,7 +467,7 @@ sim_ode(ode = mod, regimen = reg1, parameters = parameters, n = 50,
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Transit compartments","level":"3.2","depth":1,"next":{"title":"PKPD model","level":"3.3","depth":1,"path":"example-pkpd-model.md","ref":"example-pkpd-model.md","articles":[]},"previous":{"title":"Absorption lagtime","level":"3.1","depth":1,"path":"example-absorption-lagtime.md","ref":"example-absorption-lagtime.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"example-absorption-transit.md","mtime":"2016-08-17T16:53:10.635Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-08-08T20:43:57.149Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Transit compartments","level":"3.2","depth":1,"next":{"title":"PKPD model","level":"3.3","depth":1,"path":"example-pkpd-model.md","ref":"example-pkpd-model.md","articles":[]},"previous":{"title":"Absorption lagtime","level":"3.1","depth":1,"path":"example-absorption-lagtime.md","ref":"example-absorption-lagtime.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"example-absorption-transit.md","mtime":"2016-08-17T16:53:10.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-27T19:09:57.472Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

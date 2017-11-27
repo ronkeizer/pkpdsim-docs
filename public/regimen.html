@@ -2,12 +2,12 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>Regimen · GitBook</title>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Regimen · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="generator" content="GitBook 3.2.3">
         
         
         
@@ -284,6 +284,19 @@
             
         </li>
     
+        <li class="chapter " data-level="2.13" data-path="estimation_nlmixr.html">
+            
+                <a href="estimation_nlmixr.html">
+            
+                    
+                    Estimation: nlmixr
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
         
@@ -388,36 +401,47 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="regimen">Regimen</h1><p>Regimens are defined using the <code>new_regimen()</code> function. You should provide information on the dose amount, how many doses, and the dosing interval. However, how you provide that information is very flexible. You can e.g. specify:</p><pre><code>reg1 &lt;- new_regimen(
+                                <h1 id="regimen">Regimen</h1>
+<p>Regimens are defined using the <code>new_regimen()</code> function. You should provide information on the dose amount, how many doses, and the dosing interval. However, how you provide that information is very flexible. You can e.g. specify:</p>
+<pre><code>reg1 &lt;- new_regimen(
   amt = 100,
   interval = 12,
   n = 5
-)</code></pre>
-<p>which will administer 5 doses of 100 mg (or whatever the unit is), at an interval of 12 hours. The same can however also be specified as:</p><pre><code>reg1 &lt;- new_regimen(
+)
+</code></pre><p>which will administer 5 doses of 100 mg (or whatever the unit is), at an interval of 12 hours. The same can however also be specified as:</p>
+<pre><code>reg1 &lt;- new_regimen(
   amt = 100,
   times = c(0, 12, 24, 36, 48)
-)</code></pre>
-<p>or:</p><pre><code>reg1 &lt;- new_regimen(
+)
+</code></pre><p>or:</p>
+<pre><code>reg1 &lt;- new_regimen(
   amt = c(100, 100, 100, 100, 100),
   times = c(0, 12, 24, 36, 48)
-)</code></pre>
-<p>Be careful: if the length of the <code>amt</code> vector is not the same as the lenght in <code>times</code>, the function will repeat the first <code>amt</code> specified. The same goes for the arguments <code>type</code>, <code>cmt</code>, and <code>t_inf</code>.</p><p>By default, the <code>new_regimen_function()</code> function assumes the dose is given as bolus. If you want to specify that these should be given as infusion, use the following:</p><pre><code>reg1 &lt;- new_regimen(
+)
+</code></pre><p>Be careful: if the length of the <code>amt</code> vector is not the same as the lenght in <code>times</code>, the function will repeat the first <code>amt</code> specified. The same goes for the arguments <code>type</code>, <code>cmt</code>, and <code>t_inf</code>.</p>
+<p>By default, the <code>new_regimen_function()</code> function assumes the dose is given as bolus. If you want to specify that these should be given as infusion, use the following:</p>
+<pre><code>reg1 &lt;- new_regimen(
   amt = 100,
   times = c(0, 12, 24, 36, 48),
   type = &quot;infusion&quot;
-)</code></pre>
-<p>When you created the model using <code>new_ode_model</code>, you also specified a default dosing compartment. If you didn&apos;t specify the <code>dose</code> argument, the default dosing compartment is 1. Now, should you want to administer the dose into a different compartment, you can override it with the <code>cmt</code> argumentfunction:</p><pre><code>reg1 &lt;- new_regimen(
+)
+</code></pre><p>When you created the model using <code>new_ode_model</code>, you also specified a default dosing compartment. If you didn&apos;t specify the <code>dose</code> argument, the default dosing compartment is 1. Now, should you want to administer the dose into a different compartment, you can override it with the <code>cmt</code> argumentfunction:</p>
+<pre><code>reg1 &lt;- new_regimen(
   amt = 100,
   times = c(0, 12, 24, 36, 48),
   cmt = c(1, 1, 2, 2, 3)
-)</code></pre>
-<p>Which will administer the doses to compartments 1, 1, 2, 2, and 3, respectively (of course this is a hypothetical example).</p><p><em>Note: <code>PKPDsim</code> doesn&apos;t care about what unit the dose is in, you have to define this yourself in conjunction with the model code and observation scale.</em></p><h2 id="steady-state">Steady state</h2><p>Instead of simulating the full concentration time course for a give model,
+)
+</code></pre><p>Which will administer the doses to compartments 1, 1, 2, 2, and 3, respectively (of course this is a hypothetical example).</p>
+<p><em>Note: <code>PKPDsim</code> doesn&apos;t care about what unit the dose is in, you have to define this yourself in conjunction with the model code and observation scale.</em></p>
+<h2 id="steady-state">Steady state</h2>
+<p>Instead of simulating the full concentration time course for a give model,
 if you want to simulate the PK(PD) at steady state, you can also specify
 the <code>ss=TRUE</code> argument to <code>new_regimen()</code>, which will then simulate the
 regimen at steady state. By default, steady state is assumed to occur after
 5 days (PKPDsim doesn&apos;t check if steady state is reached!), but if you want
 to decrease or increase this you can do so by specifying the <code>n_ss</code> argument
 which takes the number of doses to simulate before assuming steady state.</p>
+
                                 
                                 </section>
                             
@@ -460,7 +484,7 @@ which takes the number of doses to simulate before assuming steady state.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Regimen","level":"2.3","depth":1,"next":{"title":"Parameters","level":"2.4","depth":1,"path":"parameters.md","ref":"parameters.md","articles":[]},"previous":{"title":"Model","level":"2.2","depth":1,"path":"model.md","ref":"model.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"regimen.md","mtime":"2016-08-17T17:11:20.328Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-08-08T20:43:57.149Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Regimen","level":"2.3","depth":1,"next":{"title":"Parameters","level":"2.4","depth":1,"path":"parameters.md","ref":"parameters.md","articles":[]},"previous":{"title":"Model","level":"2.2","depth":1,"path":"model.md","ref":"model.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"regimen.md","mtime":"2016-08-17T17:11:20.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-27T19:09:57.472Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

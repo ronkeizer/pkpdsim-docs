@@ -2,12 +2,12 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>Absorption lagtime · GitBook</title>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Absorption lagtime · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="generator" content="GitBook 3.2.3">
         
         
         
@@ -66,7 +66,7 @@
     <link rel="next" href="example-absorption-transit.html" />
     
     
-    <link rel="prev" href="speed.html" />
+    <link rel="prev" href="estimation_nlmixr.html" />
     
 
     </head>
@@ -284,6 +284,19 @@
             
         </li>
     
+        <li class="chapter " data-level="2.13" data-path="estimation_nlmixr.html">
+            
+                <a href="estimation_nlmixr.html">
+            
+                    
+                    Estimation: nlmixr
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
         
@@ -388,7 +401,9 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="absorption-with-lag-time">Absorption with lag time</h1><p>Specify the <code>lagtime</code> when you create the model using <code>new_ode_model</code>. The lag time can either be a number, or a string referring to a parameter (e.g. &quot;ALAG&quot;). If a single number or parameter is specified, the lag time will apply to the default dose compartment only. Alternatively, it is also possible to specify a vector of lag times, with a value for each compartment.</p><pre><code>pk  &lt;- new_ode_model(code = &quot;
+                                <h1 id="absorption-with-lag-time">Absorption with lag time</h1>
+<p>Specify the <code>lagtime</code> when you create the model using <code>new_ode_model</code>. The lag time can either be a number, or a string referring to a parameter (e.g. &quot;ALAG&quot;). If a single number or parameter is specified, the lag time will apply to the default dose compartment only. Alternatively, it is also possible to specify a vector of lag times, with a value for each compartment.</p>
+<pre><code>pk  &lt;- new_ode_model(code = &quot;
                      dAdt[1] = -KA * A[1]
                      dAdt[2] = KA*A[1] -(CL/V) * A[2]
                      &quot;,
@@ -405,8 +420,8 @@ sim_ode (ode = &quot;pk&quot;,
                 par = p,
                 regimen = r,
                 verbose = FALSE,
-                only_obs = TRUE) %&gt;% plot()</code></pre>
-
+                only_obs = TRUE) %&gt;% plot()
+</code></pre>
                                 
                                 </section>
                             
@@ -433,7 +448,7 @@ sim_ode (ode = &quot;pk&quot;,
 
             
                 
-                <a href="speed.html" class="navigation navigation-prev " aria-label="Previous page: Speed">
+                <a href="estimation_nlmixr.html" class="navigation navigation-prev " aria-label="Previous page: Estimation: nlmixr">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
@@ -449,7 +464,7 @@ sim_ode (ode = &quot;pk&quot;,
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Absorption lagtime","level":"3.1","depth":1,"next":{"title":"Transit compartments","level":"3.2","depth":1,"path":"example-absorption-transit.md","ref":"example-absorption-transit.md","articles":[]},"previous":{"title":"Speed","level":"2.12","depth":1,"path":"speed.md","ref":"speed.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"example-absorption-lagtime.md","mtime":"2016-08-17T16:52:52.783Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-08-08T20:43:57.149Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Absorption lagtime","level":"3.1","depth":1,"next":{"title":"Transit compartments","level":"3.2","depth":1,"path":"example-absorption-transit.md","ref":"example-absorption-transit.md","articles":[]},"previous":{"title":"Estimation: nlmixr","level":"2.13","depth":1,"path":"estimation_nlmixr.md","ref":"estimation_nlmixr.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"example-absorption-lagtime.md","mtime":"2016-08-17T16:52:52.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-27T19:09:57.472Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Model · GitBook</title>
+        <title>Estimation: nlmixr · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -63,10 +63,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="regimen.html" />
+    <link rel="next" href="example-absorption-lagtime.html" />
     
     
-    <link rel="prev" href="documentation.html" />
+    <link rel="prev" href="speed.html" />
     
 
     </head>
@@ -141,7 +141,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="2.2" data-path="model.html">
+        <li class="chapter " data-level="2.2" data-path="model.html">
             
                 <a href="model.html">
             
@@ -284,7 +284,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.13" data-path="estimation_nlmixr.html">
+        <li class="chapter active" data-level="2.13" data-path="estimation_nlmixr.html">
             
                 <a href="estimation_nlmixr.html">
             
@@ -386,7 +386,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Model</a>
+        <a href="." >Estimation: nlmixr</a>
     </h1>
 </div>
 
@@ -401,100 +401,80 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="model">Model</h1>
-<p><code>new_ode_model</code> is the function that creates a new ODE model that can be used in the <code>sim_ode()</code> command. It defines the ODE system and sets some attributes for the model. The model can be specified in three different ways:</p>
-<ul>
-<li><code>model</code>: a string that references a model from the library included in <code>PKPDsim</code>. Examples in the current library are e.g. <code>pk_1cmt_oral</code>, <code>pk_2cmt_iv</code>. To show the available models, run <code>new_ode_model()</code> without any arguments.</li>
-<li><code>code</code>: using code specyfing derivatives for ODE specified in <em>pseudo-R</em> code</li>
-<li><code>file</code>: similar to <code>code</code>, but reads the code from a file</li>
-</ul>
-<h2 id="model-from-library">Model from library</h2>
-<p>For example, a 1-compartment oral PK model can be obtained using:</p>
-<pre><code>pk1 &lt;- new_ode_model(model = &quot;pk_1cmt_oral&quot;)
-</code></pre><p>Run the <code>new_ode_model()</code> function without arguments to see the currently available models:</p>
-<pre><code>&gt; new_ode_model()
-  Either a model name (from the PKPDsim library), ODE code, an R function, or
-  a file containing code for the ODE system have to be supplied to this function.
-  The following models are available:
-  pk_1cmt_iv
-  pk_1cmt_iv_auc
-  pk_1cmt_iv_mm
-  pk_2cmt_iv
-  pk_2cmt_iv_auc
-  pk_1cmt_oral
-</code></pre><h2 id="custom-model-from-code">Custom model from code</h2>
-<p>The custom model needs to be specified as a string or text block:</p>
-<pre><code>pk1 &lt;- new_ode_model(code = &quot;
-  dAdt[1] = -KA * A[1]
-  dAdt[2] = +KA * A[1] -(CL/V) * A[2]
-&quot;)
-</code></pre><p>The input code should adhere to the follow rules:</p>
-<ul>
-<li>the derivaties in the ODE system are defined using <code>dAdt</code></li>
-<li>array indices for the derivatives and compartments are indicated with <code>[ ]</code> and start at 1.</li>
-<li>equations are defined using <code>=</code></li>
-<li>some expections apply, e.g. power functions (see below).</li>
-</ul>
-<p>The input code is translated into a C++ function. You can check that the model compiled correctly by typing the model name on the R command line, which prints the model information:</p>
-<pre><code>&gt; pk1
-ODE definition:
+                                <h1 id="estimation-nlmixr">Estimation: nlmixr</h1>
+<p>While the <code>PKPDsim</code> R package does not include functionality to perform population estimation within the package, it does offer
+a convenient translator to be able to use the <a href="http://nlmixr.org" target="_blank"><code>nlmixr</code> R package</a> for parameter estimation. <code>nlmixr</code> allows fitting of
+population PK-PD models using common algorithms applied in pharmacometrics, such as <em>FOCE</em> and <em>SAEM</em>. For installation and usage of <code>nlmixr</code>,
+please refer to the documentation in the <code>nlmixr</code> package and on the respective website.</p>
+<h2 id="translation">Translation</h2>
+<p>Under the hood, <code>nlmixr</code> uses the <code>RxODE</code> R package to perform PKPD model simulations, and which is very similar to <code>PKPDsim</code>. The model syntax for both <code>RxODE</code> and <code>nlmixr</code> compared to <code>PKPDsim</code> are also very similar, making translation fairly straightforward. A model translator has therefore been included in <code>PKPDsim</code> that allows translation of a <code>PKPDsim</code> model to <code>nlmixr</code> syntax, e.g.</p>
+<pre><code>mod &lt;- new_ode_model(&quot;pk_1cmt_iv&quot;)
+f &lt;- pkpdsim_to_nlmixr(
+  model = mod,
+  parameters = list(CL = 5, V = 50),
+  omega = c(0.1, 0.05, 0.1),
+  res_var = list(prop = 0.1, add = 0.1),
+  log_transform = T)
+</code></pre><p>The return object <code>f</code> generated by <code>pkpdsim_to_nlmixr</code> is an object that defines the required model and parameter definitions in <code>nlmixr</code> syntax:</p>
+<pre><code>&gt; f
+function() {
+  ini({
+    logCL &lt;- log(5) # log CL
+    logV &lt;- log(50) # log V
+    err_prop &lt;- c(0, 0.1, 1)
+    err_add &lt;- c(0, 1, 10)
+    eta_CL + eta_V ~ c(
+      0.1, 0.05, 0.1)
+  })
+  model({
+    CL &lt;- exp(logCL + eta_CL)
+    V &lt;- exp(logV + eta_V)
+        d/dt(A1) = -(CL/V)*A1;
+    y = A1/V
+    y ~  prop(err_prop) + add(err_add)
+  })
+}
+</code></pre><p>A full code example is included below.</p>
+<p><em>Note: both nlmixr and the nlmixr-translator in PKPDsim are still under active development. Syntax and results may change.</em></p>
+<h2 id="example">Example</h2>
+<pre><code>library(tidyverse)
+library(PKPDsim)
+library(nlmixr)
 
-  double   KEL = CL/V;
-  dAdt[0] = -KA * A[0] + rate;
-  dAdt[1] = +KA * A[1] -KEL * A[1];
-  ;
+## Create PKPDsim model
+mod   &lt;- new_ode_model(&quot;pk_1cmt_iv&quot;)
+par   &lt;- list(CL = 5, V = 50)
+ruv   &lt;- list(prop = 0.1, add = 1)
+omega &lt;- c(0.1,
+           0.05, 0.1)
 
-Required parameters: CL, V, KA
-Number of compartments: 2
-Observation compartment: 1
-Dependent variable scaling: 1
-</code></pre><p>If you want even more detailed information, you can also print the actual C++ function that is used <em>under-the-hood</em> by specifying the <code>cpp_show_code=TRUE</code> argument to the <code>new_ode_model()</code> function.</p>
-<h2 id="more-custom-model-options">More custom model options</h2>
-<p>You can introduce new variables in your code, but you will have to define them using <code>declare_variables</code> argument too:</p>
-<pre><code>pk1 &lt;- new_ode_model(code = &quot;
-  KEL = CL/V
-  dAdt[1] = -KA * A[1]
-  dAdt[2] = +KA * A[1] -KEL * A[2]
-&quot;, declare_variables = c(&quot;KEL&quot;))
-</code></pre><p>Also, when you want to use covariates in your ODE system (more info on how to define covariates is in the <em>Covariates</em> section), you will have to define them, both in the code and in the function call:</p>
-<pre><code>pk1 &lt;- new_ode_model(code = &quot;
-  CLi = WT/70
-  KEL = CLi/V
-  dAdt[1] = -KA * A[1]
-  dAdt[2] = +KA * A[1] -(CL*(WT/70)/V) * A[2]
-&quot;, declare_variables = c(&quot;KEL&quot;, &quot;CLi&quot;), covariates = c(&quot;WT&quot;))
-</code></pre><p>One exception to the input code syntax is the definition of power functions. <code>PKPDsim</code> does not translate those from the <em>pseudo-R</em> code to valid C++ syntax automatically. C/C++ does not use the <code>^</code> to indicate power functions but uses the <code>pow(value, base)</code> function instead, so e.g. an allometric model should be written as:</p>
-<pre><code>pk1 &lt;- new_ode_model(code = &quot;
-  CLi = CL * pow((WT/70), 0.75)
-  dAdt[1] = -KA * A[1]
-  dAdt[2] = +KA * A[1] -(CLi/V) * A[2]
-&quot;, declare_variables = c(&quot;CLi&quot;))
-</code></pre><p><em>Dosing</em></p>
-<p>The default dosing compartment and bioavailability can be specified using the <code>dose</code> argument. By default, the dose will go into compartment <code>1</code>, with a bioavailability of <code>1</code>. The <code>bioav</code> element in the list can be either a number or a character string referring a parameter.</p>
-<pre><code>pk1 &lt;- new_ode_model(code = &quot;
-  dAdt[1] = -KA * A[1]
-  dAdt[2] = +KA * A[1] -(CL/V) * A[2]
-&quot;,
-  dose = list(cmt = 1, bioav = &quot;F1&quot;))
-</code></pre><p><em>Observations</em></p>
-<p>The observation compartment can be set by specifying a list to the <code>obs</code> argument, with the elements <code>obs</code> and <code>scale</code>.</p>
-<pre><code>pk1 &lt;- new_ode_model(code = &quot;
-  dAdt[1] = -KA * A[1]
-  dAdt[2] = +KA * A[1] -(CL/V) * A[2]
-&quot;, obs = list(cmt = 2, scale = &quot;V&quot;))
-</code></pre><p>The <code>scale</code> can be either a parameter or a number, the <code>cmt</code> can only be a number.</p>
-<p><em>Note that the variables specified inside the differential equation block are not available as scaling parameters. E.g. for allometry you will have to redefine the scaled volume as follows:</em></p>
-<pre><code>pk1 &lt;- new_ode_model(code = &quot;
-  Vi = V * (WT/70)
-  dAdt[1] = -KA * A[1]
-  dAdt[2] = +KA * A[1] -(CL/Vi) * A[2]
-&quot;, obs = list(cmt = 2, scale = &quot;V * (WT/70)&quot;))
-</code></pre><h2 id="custom-model-from-file">Custom model from file</h2>
-<p>The same syntax as explained above applies, but using the <code>file=</code> argument the input code is read from the specified file. This is just a convenience function, i.e. it allows you to modularize your code, and separate models and R code.</p>
-<pre><code>pk1 &lt;- new_ode_model(
-  file = &quot;pk_1cmt_oral_nonlin_v1.txt&quot;,
-  declare_variables = c(&quot;KEL&quot;, &quot;CLi&quot;)
-)
+## Simulate data
+t_obs &lt;- c(8, 23.5, 25, 71.5)
+n &lt;- 50
+regimen &lt;- new_regimen(amt = 1500, n = 4, interval = 24, type = &quot;bolus&quot;)
+conc &lt;- sim_ode(
+  ode = mod, regimen = regimen, parameters = par,
+  omega = omega, only_obs = T, t_obs = t_obs, n = n,
+  res_var = ruv) %&gt;%
+  dplyr::mutate(EVID = 0, AMT = 0, MDV = 0, CMT = 1) %&gt;%
+  dplyr::select(ID = id, TIME = t, CMT, DV = y, AMT, EVID, MDV)
+doses &lt;- regimen_to_nm(regimen, n_ind = n)
+simdat &lt;- dplyr::bind_rows(doses, conc) %&gt;% dplyr::arrange(ID, TIME)
+d &lt;- nmDataConvert(simdat)
+
+## Create nlmixr model object
+f &lt;- pkpdsim_to_nlmixr(
+  model = mod,
+  parameters = par,
+  omega = c(0.1, 0.05, 0.1),
+  res_var = list(prop = 0.1, add = 0.1),
+  log_transform = T)
+
+## Perform fit using nlmixr
+fit &lt;- nlmixr(object = f,
+       data = d,
+       est = &quot;saem&quot;,
+       saemControl(n.burn = 100, n.em = 200))
 </code></pre>
                                 
                                 </section>
@@ -522,12 +502,12 @@ Dependent variable scaling: 1
 
             
                 
-                <a href="documentation.html" class="navigation navigation-prev " aria-label="Previous page: General">
+                <a href="speed.html" class="navigation navigation-prev " aria-label="Previous page: Speed">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="regimen.html" class="navigation navigation-next " aria-label="Next page: Regimen">
+                <a href="example-absorption-lagtime.html" class="navigation navigation-next " aria-label="Next page: Absorption lagtime">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -538,7 +518,7 @@ Dependent variable scaling: 1
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Model","level":"2.2","depth":1,"next":{"title":"Regimen","level":"2.3","depth":1,"path":"regimen.md","ref":"regimen.md","articles":[]},"previous":{"title":"General","level":"2.1","depth":1,"path":"documentation.md","ref":"documentation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"model.md","mtime":"2016-11-14T22:46:38.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-27T19:09:57.472Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Estimation: nlmixr","level":"2.13","depth":1,"next":{"title":"Absorption lagtime","level":"3.1","depth":1,"path":"example-absorption-lagtime.md","ref":"example-absorption-lagtime.md","articles":[]},"previous":{"title":"Speed","level":"2.12","depth":1,"path":"speed.md","ref":"speed.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"estimation_nlmixr.md","mtime":"2017-11-27T19:09:38.098Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-27T19:09:57.472Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

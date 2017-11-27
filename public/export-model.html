@@ -2,12 +2,12 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>Export model · GitBook</title>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Export model · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="generator" content="GitBook 3.2.3">
         
         
         
@@ -284,6 +284,19 @@
             
         </li>
     
+        <li class="chapter " data-level="2.13" data-path="estimation_nlmixr.html">
+            
+                <a href="estimation_nlmixr.html">
+            
+                    
+                    Estimation: nlmixr
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
         
@@ -388,7 +401,9 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="export-model">Export model</h1><p>PKPDsim allows you to export your ODE model to a precompiled R package. The benefit of doing so is that compilation (which usually takes 3-5 seconds) has to be done only when the package is created, and not when it is reloaded into R. This is useful for example when you want to create a Shiny app using a PKPDsim model, as it will remove the delay due to the compilation when starting the Shiny app. You can export to a package using the <code>package</code> argument to <code>new_ode_model</code>. With the <code>install</code> option you can control whether the package should be installed into R (default), or exported to a zip-file (<code>install=FALSE</code>). Example:</p><pre><code>library(PKPDsim)
+                                <h1 id="export-model">Export model</h1>
+<p>PKPDsim allows you to export your ODE model to a precompiled R package. The benefit of doing so is that compilation (which usually takes 3-5 seconds) has to be done only when the package is created, and not when it is reloaded into R. This is useful for example when you want to create a Shiny app using a PKPDsim model, as it will remove the delay due to the compilation when starting the Shiny app. You can export to a package using the <code>package</code> argument to <code>new_ode_model</code>. With the <code>install</code> option you can control whether the package should be installed into R (default), or exported to a zip-file (<code>install=FALSE</code>). Example:</p>
+<pre><code>library(PKPDsim)
 p &lt;- list(CL = 5, V = 50)
 reg &lt;- new_regimen (amt = 100, n = 4, interval = 12, type = &quot;bolus&quot;,  cmt=1)
 
@@ -404,8 +419,8 @@ new_ode_model(
 
 library(pktest)
 mod &lt;- pktest::model()
-dat &lt;- sim(mod, parameters = p, regimen = reg)</code></pre>
-
+dat &lt;- sim(mod, parameters = p, regimen = reg)
+</code></pre>
                                 
                                 </section>
                             
@@ -448,7 +463,7 @@ dat &lt;- sim(mod, parameters = p, regimen = reg)</code></pre>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Export model","level":"2.11","depth":1,"next":{"title":"Speed","level":"2.12","depth":1,"path":"speed.md","ref":"speed.md","articles":[]},"previous":{"title":"Plotting","level":"2.10","depth":1,"path":"plotting.md","ref":"plotting.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"export-model.md","mtime":"2016-11-14T23:06:30.663Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-08-08T20:43:57.149Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Export model","level":"2.11","depth":1,"next":{"title":"Speed","level":"2.12","depth":1,"path":"speed.md","ref":"speed.md","articles":[]},"previous":{"title":"Plotting","level":"2.10","depth":1,"path":"plotting.md","ref":"plotting.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"export-model.md","mtime":"2016-11-14T23:06:30.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-27T19:09:57.472Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

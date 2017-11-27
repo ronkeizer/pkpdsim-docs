@@ -2,12 +2,12 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>Simulation · GitBook</title>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Simulation · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="generator" content="GitBook 3.2.3">
         
         
         
@@ -284,6 +284,19 @@
             
         </li>
     
+        <li class="chapter " data-level="2.13" data-path="estimation_nlmixr.html">
+            
+                <a href="estimation_nlmixr.html">
+            
+                    
+                    Estimation: nlmixr
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
         
@@ -388,18 +401,21 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="simulation">Simulation</h1><p>The <code>sim_ode()</code> function will combine the model, the parameters, and the regimen, and simulate out the ODE system. It will return a <code>data.frame</code> in the long format, i.e. one observation per row, and split by compartment and individual. The command for <code>sim_ode</code> looks e.g. like this:</p><pre><code>dat &lt;- sim_ode(
+                                <h1 id="simulation">Simulation</h1>
+<p>The <code>sim_ode()</code> function will combine the model, the parameters, and the regimen, and simulate out the ODE system. It will return a <code>data.frame</code> in the long format, i.e. one observation per row, and split by compartment and individual. The command for <code>sim_ode</code> looks e.g. like this:</p>
+<pre><code>dat &lt;- sim_ode(
   ode = model,              # created using new_ode_model()
   parameters = parameters,  # just a list of parameters
   regimen = regimen         # created using new_regimen
-)</code></pre>
-<p>By default, the observation times will include an observation every 1 hour. However, you can specify a vector of observation times to get only those observations:</p><pre><code>dat &lt;- sim_ode(
+)
+</code></pre><p>By default, the observation times will include an observation every 1 hour. However, you can specify a vector of observation times to get only those observations:</p>
+<pre><code>dat &lt;- sim_ode(
   ode = model,
   parameters = parameters,
   regimen = regimen,
   t_obs = c(0.5, 2, 4, 8, 12, 16, 24)
-)</code></pre>
-
+)
+</code></pre>
                                 
                                 </section>
                             
@@ -442,7 +458,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Simulation","level":"2.5","depth":1,"next":{"title":"Output","level":"2.6","depth":1,"path":"output.md","ref":"output.md","articles":[]},"previous":{"title":"Parameters","level":"2.4","depth":1,"path":"parameters.md","ref":"parameters.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"simulation.md","mtime":"2017-04-03T18:15:15.380Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-08-08T20:43:57.149Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Simulation","level":"2.5","depth":1,"next":{"title":"Output","level":"2.6","depth":1,"path":"output.md","ref":"output.md","articles":[]},"previous":{"title":"Parameters","level":"2.4","depth":1,"path":"parameters.md","ref":"parameters.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"simulation.md","mtime":"2017-04-03T18:15:15.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-27T19:09:57.472Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

@@ -2,12 +2,12 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>Getting started · GitBook</title>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Getting started · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="generator" content="GitBook 3.2.3">
         
         
         
@@ -284,6 +284,19 @@
             
         </li>
     
+        <li class="chapter " data-level="2.13" data-path="estimation_nlmixr.html">
+            
+                <a href="estimation_nlmixr.html">
+            
+                    
+                    Estimation: nlmixr
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
         
@@ -388,35 +401,43 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="getting-started">Getting started</h1><h2 id="installation">Installation</h2><p>At current, <code>PKPDsim</code> is not yet on CRAN (but it will be released to there soon). So you cannot use <code>install.packages()</code> yet to install it. However, the package can be installed directly from GitHub when you have the <code>devtools</code> package installed:</p><pre><code>library(devtools)
+                                <h1 id="getting-started">Getting started</h1>
+<h2 id="installation">Installation</h2>
+<p>At current, <code>PKPDsim</code> is not yet on CRAN (but it will be released to there soon). So you cannot use <code>install.packages()</code> yet to install it. However, the package can be installed directly from GitHub when you have the <code>devtools</code> package installed:</p>
+<pre><code>library(devtools)
 install_github(&quot;ronkeizer/PKPDsim&quot;)
-library(PKPDsim)</code></pre>
-<h2 id="first-simulation">First simulation</h2><p>The main simulation function in <code>PKPDsim</code> is <code>sim_ode()</code>. To be able to simulate a dosing regimen for a specific drug, at least the following <strong>three</strong> arguments are required:</p><ul><li><code>model</code>: the model (created using the <code>new_ode_model()</code> function)
-</li>
-<li><code>parameters</code>: a <code>list</code> of parameter values for the model
-</li>
-<li><code>regimen</code>: the dosing regimen (created using the <code>new_regimen()</code> function)
-</li></ul>
-<p>The model library in PKPDsim contains a small selection of PK and PD models, but the main strength of course is it&apos;s ability to handle user-specified ODE systems. However, as a first example, let&apos;s implement the most simple example:</p><pre><code>p &lt;- list(CL = 1, V  = 10, KA = 0.5)
+library(PKPDsim)
+</code></pre><h2 id="first-simulation">First simulation</h2>
+<p>The main simulation function in <code>PKPDsim</code> is <code>sim_ode()</code>. To be able to simulate a dosing regimen for a specific drug, at least the following <strong>three</strong> arguments are required:</p>
+<ul>
+<li><code>model</code>: the model (created using the <code>new_ode_model()</code> function)</li>
+<li><code>parameters</code>: a <code>list</code> of parameter values for the model</li>
+<li><code>regimen</code>: the dosing regimen (created using the <code>new_regimen()</code> function)</li>
+</ul>
+<p>The model library in PKPDsim contains a small selection of PK and PD models, but the main strength of course is it&apos;s ability to handle user-specified ODE systems. However, as a first example, let&apos;s implement the most simple example:</p>
+<pre><code>p &lt;- list(CL = 1, V  = 10, KA = 0.5)
 pk1 &lt;- new_ode_model(&quot;pk_1cmt_oral&quot;)
 r1 &lt;- new_regimen(amt = 100,
                   n = 5,
                   interval = 12)
 dat &lt;- sim_ode (ode = &quot;pk1&quot;,
                 par = p,
-                regimen = r1)</code></pre>
-<p>You probably noticed that the <code>new_ode_model()</code>-step took a few seconds to finish, while the simulation itself was in the order of milliseconds. In <code>new_ode_model</code>, the model is compiled to C++ binary code, which takes a few seconds. However, this has to be done only once. After compilation, the model is then available to be used in <code>sim_ode()</code> for as long as the R session is open.</p><p>So let&apos;s look at the output. <code>PKPDsim</code> will output data in the long format, i.e. one row per observed timepoint and split by compartment:</p><pre><code>&gt; head(dat)
+                regimen = r1)
+</code></pre><p>You probably noticed that the <code>new_ode_model()</code>-step took a few seconds to finish, while the simulation itself was in the order of milliseconds. In <code>new_ode_model</code>, the model is compiled to C++ binary code, which takes a few seconds. However, this has to be done only once. After compilation, the model is then available to be used in <code>sim_ode()</code> for as long as the R session is open.</p>
+<p>So let&apos;s look at the output. <code>PKPDsim</code> will output data in the long format, i.e. one row per observed timepoint and split by compartment:</p>
+<pre><code>&gt; head(dat)
   id t comp         y
 1  1 0    1 100.00000
 2  1 1    1  60.65307
 3  1 2    1  36.78794
 4  1 3    1  22.31302
 5  1 4    1  13.53353
-6  1 5    1   8.20850</code></pre>
-<p>To check whether our simulation actually produced results, let&apos;s plot it (installation of <code>ggplot2</code> required).</p><pre><code>ggplot(dat, aes(x=t, y=y)) +
+6  1 5    1   8.20850
+</code></pre><p>To check whether our simulation actually produced results, let&apos;s plot it (installation of <code>ggplot2</code> required).</p>
+<pre><code>ggplot(dat, aes(x=t, y=y)) +
   geom_line() +
-  facet_wrap(~comp)</code></pre>
-
+  facet_wrap(~comp)
+</code></pre>
                                 
                                 </section>
                             
@@ -459,7 +480,7 @@ dat &lt;- sim_ode (ode = &quot;pk1&quot;,
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Getting started","level":"1.2","depth":1,"next":{"title":"General","level":"2.1","depth":1,"path":"documentation.md","ref":"documentation.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"getting-started.md","mtime":"2017-02-27T01:36:36.351Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-08-08T20:43:57.149Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Getting started","level":"1.2","depth":1,"next":{"title":"General","level":"2.1","depth":1,"path":"documentation.md","ref":"documentation.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"getting-started.md","mtime":"2017-02-27T01:36:36.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-27T19:09:57.472Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

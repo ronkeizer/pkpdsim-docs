@@ -2,12 +2,12 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>Output · GitBook</title>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Output · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="generator" content="GitBook 3.2.3">
         
         
         
@@ -284,6 +284,19 @@
             
         </li>
     
+        <li class="chapter " data-level="2.13" data-path="estimation_nlmixr.html">
+            
+                <a href="estimation_nlmixr.html">
+            
+                    
+                    Estimation: nlmixr
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
         
@@ -388,12 +401,18 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="output">Output</h1><p>Output from <code>sim_ode()</code> is in the form of a <code>data.frame</code>. The output is in the long format, and split by compartment. This makes the output ready for plotting e.g. with <code>ggplot2</code> (see section on <em>plotting</em>).</p><p>By default, <code>sim_ode()</code> will return a <code>data.frame</code> with the data for all compartments. If you are only interested in the observed data (i.e. the concentrations in the case of PK), you can select only those by specifying the <code>only_obs = TRUE</code> option. Please note that the <code>comp</code> column in the dataset will have the indices for all the compartments, as well as an extra set of rows for the <code>&quot;obs&quot;</code>
- (observation) data, which is scaled by the scaling factor specified in the model.</p><p>The output for the observation, as well as the compartment from which the observation is taken can be set using the <code>obs</code> argument:</p><pre><code>mod &lt;- new_ode_model(code = &quot;
+                                <h1 id="output">Output</h1>
+<p>Output from <code>sim_ode()</code> is in the form of a <code>data.frame</code>. The output is in the long format, and split by compartment. This makes the output ready for plotting e.g. with <code>ggplot2</code> (see section on <em>plotting</em>).</p>
+<p>By default, <code>sim_ode()</code> will return a <code>data.frame</code> with the data for all compartments. If you are only interested in the observed data (i.e. the concentrations in the case of PK), you can select only those by specifying the <code>only_obs = TRUE</code> option. Please note that the <code>comp</code> column in the dataset will have the indices for all the compartments, as well as an extra set of rows for the <code>&quot;obs&quot;</code>
+ (observation) data, which is scaled by the scaling factor specified in the model.</p>
+<p>The output for the observation, as well as the compartment from which the observation is taken can be set using the <code>obs</code> argument:</p>
+<pre><code>mod &lt;- new_ode_model(code = &quot;
   dAdt[1] = -KA * A[1];
   dAdt[2] = -(CL/V) * A[2] + KA*A[1];
-&quot;, obs = list(cmt = 2, scale = &quot;V&quot;))</code></pre>
-<h3 id="multiple-observation-types">Multiple observation types</h3><p>If you would like to output more than one observation type, such as the concentration of the parent drug and the concentration of the metabolite, you can control that using the <code>obs</code> argument. Below is an example where the amount in the absorption compartment as well as the systemic drug concentration are outputted.</p><pre><code>mod &lt;- new_ode_model(code = &quot;
+&quot;, obs = list(cmt = 2, scale = &quot;V&quot;))
+</code></pre><h3 id="multiple-observation-types">Multiple observation types</h3>
+<p>If you would like to output more than one observation type, such as the concentration of the parent drug and the concentration of the metabolite, you can control that using the <code>obs</code> argument. Below is an example where the amount in the absorption compartment as well as the systemic drug concentration are outputted.</p>
+<pre><code>mod &lt;- new_ode_model(code = &quot;
   dAdt[1] = -KA * A[1];
   dAdt[2] = -(CL/V) * A[2] + KA*A[1];
 &quot;, obs = list(cmt = c(2, 2),
@@ -402,8 +421,10 @@
 
 par &lt;- list(CL = 5, V = 50, KA = .5)
 reg &lt;- new_regimen(amt = 100, n = 5, interval = 12)
-res &lt;- sim_ode(ode = mod, parameters = par, regimen = reg, only_obs = T)</code></pre>
-<h3 id="parameters-variables-and-covariates">Parameters, variables, and covariates</h3><p>It is often useful to include model parameters, generated variables, and/or covariates in the output table as well, especially if covariates and between-subject variability is included in the simulation. Use the <code>output_include</code> argument for this:</p><pre><code>dat &lt;- sim(pk1, parameters = p, regimen = reg,
+res &lt;- sim_ode(ode = mod, parameters = par, regimen = reg, only_obs = T)
+</code></pre><h3 id="parameters-variables-and-covariates">Parameters, variables, and covariates</h3>
+<p>It is often useful to include model parameters, generated variables, and/or covariates in the output table as well, especially if covariates and between-subject variability is included in the simulation. Use the <code>output_include</code> argument for this:</p>
+<pre><code>dat &lt;- sim(pk1, parameters = p, regimen = reg,
   covariates_table = cov_table,
   covariates_implementation = list(SCR = &quot;interpolate&quot;),
   omega = c(0.1, 0.05, 0.1), n_ind = 50,
@@ -411,8 +432,8 @@ res &lt;- sim_ode(ode = mod, parameters = par, regimen = reg, only_obs = T)</cod
     parameters = TRUE,
     variables = TRUE,
     covariates = TRUE)
-)</code></pre>
-
+)
+</code></pre>
                                 
                                 </section>
                             
@@ -455,7 +476,7 @@ res &lt;- sim_ode(ode = mod, parameters = par, regimen = reg, only_obs = T)</cod
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Output","level":"2.6","depth":1,"next":{"title":"Variability","level":"2.7","depth":1,"path":"variability.md","ref":"variability.md","articles":[]},"previous":{"title":"Simulation","level":"2.5","depth":1,"path":"simulation.md","ref":"simulation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"output.md","mtime":"2017-04-03T18:17:52.034Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-08-08T20:43:57.149Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Output","level":"2.6","depth":1,"next":{"title":"Variability","level":"2.7","depth":1,"path":"variability.md","ref":"variability.md","articles":[]},"previous":{"title":"Simulation","level":"2.5","depth":1,"path":"simulation.md","ref":"simulation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"output.md","mtime":"2017-04-03T18:17:52.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-27T19:09:57.472Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

@@ -16,6 +16,7 @@
 * [Plotting](plotting.md)
 * [Export model](export-model.md)
 * [Speed](speed.md)
+* [Estimation: nlmixr](estimation_nlmixr.md)
 
 ## More examples
 

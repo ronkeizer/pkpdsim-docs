@@ -2,12 +2,12 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>Shiny app · GitBook</title>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Shiny app · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="generator" content="GitBook 3.2.3">
         
         
         
@@ -282,6 +282,19 @@
             
         </li>
     
+        <li class="chapter " data-level="2.13" data-path="estimation_nlmixr.html">
+            
+                <a href="estimation_nlmixr.html">
+            
+                    
+                    Estimation: nlmixr
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
         
@@ -386,7 +399,11 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="example-shiny-app">Example: Shiny app</h1><p>The <code>PKPDsim</code> library is primarily menat to be used from the R command line, but can also be used to dynamically generate Shiny frontends to allow interactive use for model exploration and teaching purposes.</p><p>Auto-generation of Shiny apps based on <code>PKPDsim</code> models is possible using the <code>PKPDsimShiny</code> package. Of course, it is often more appropriate to write your own Shiny app, which could rely on the <code>PKPDsim</code> library for the simulation of the PK-PD model.</p><p><img alt="Shiny" src="assets/images/shiny.png"></p><pre><code># devtools::install_github(&quot;ronkeizer/PKPDsimShiny&quot;)
+                                <h1 id="example-shiny-app">Example: Shiny app</h1>
+<p>The <code>PKPDsim</code> library is primarily menat to be used from the R command line, but can also be used to dynamically generate Shiny frontends to allow interactive use for model exploration and teaching purposes.</p>
+<p>Auto-generation of Shiny apps based on <code>PKPDsim</code> models is possible using the <code>PKPDsimShiny</code> package. Of course, it is often more appropriate to write your own Shiny app, which could rely on the <code>PKPDsim</code> library for the simulation of the PK-PD model.</p>
+<p><img src="assets/images/shiny.png" alt="Shiny" title="Shiny example"></p>
+<pre><code># devtools::install_github(&quot;ronkeizer/PKPDsimShiny&quot;)
 library(PKPDsim)
 library(PKPDsimShiny)
 
@@ -406,8 +423,8 @@ PKPDsimShiny::sim_ode_shiny (
   par = p,
   n_ind = n,
   omega = omega,
-  regimen = r1)</code></pre>
-
+  regimen = r1)
+</code></pre>
                                 
                                 </section>
                             
@@ -446,7 +463,7 @@ PKPDsimShiny::sim_ode_shiny (
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Shiny app","level":"3.4","depth":1,"previous":{"title":"PKPD model","level":"3.3","depth":1,"path":"example-pkpd-model.md","ref":"example-pkpd-model.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"example-shiny-app.md","mtime":"2016-08-17T16:52:33.143Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-08-08T20:43:57.149Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Shiny app","level":"3.4","depth":1,"previous":{"title":"PKPD model","level":"3.3","depth":1,"path":"example-pkpd-model.md","ref":"example-pkpd-model.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","expandable-chapters","toc"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"example-shiny-app.md","mtime":"2016-08-17T16:52:33.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-27T19:09:57.472Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
