@@ -54,7 +54,7 @@ To allow more flexibility in how between-subject variability enters the model, t
                           dAdt[2] = KA * A[1] - (CLi/Vi) * A[2]
                           ", declare_variables = c("CLi", "Vi", "F1i"),
                           obs = list(cmt = 2, scale = "V * exp(eta2)"),
-                          dose = list(cmt = 1, scale = "F1i"))
+                          dose = list(cmt = 1, bioav = "F1i"))
     reg1 <- new_regimen(amt = 100, n = 2, interval = 12, type="oral")
 
     dat <- sim_ode (

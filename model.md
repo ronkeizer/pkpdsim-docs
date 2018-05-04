@@ -85,7 +85,7 @@ One exception to the input code syntax is the definition of power functions. `PK
       dAdt[2] = +KA * A[1] -(CLi/V) * A[2]
     ", declare_variables = c("CLi"))
 
-*Dosing*
+### Dosing / bioavailability
 
 The default dosing compartment and bioavailability can be specified using the `dose` argument. By default, the dose will go into compartment `1`, with a bioavailability of `1`. The `bioav` element in the list can be either a number or a character string referring a parameter.
 
@@ -95,7 +95,15 @@ The default dosing compartment and bioavailability can be specified using the `d
     ",
       dose = list(cmt = 1, bioav = "F1"))
 
-*Observations*
+For dosing based on mg/kg, at currently there is no solution for that using `new_regimen()`, although that might change in the future. The way to implement this at the moment is by scaling the dose by the "weight" covariate using the bioavailability:
+
+    mod <- new_ode_model(code = "
+      dAdt[1] = -(CL/V)*A[1];
+    ",
+      dose = list(cmt = 1, bioav = "WT"),
+      obs = list(cmt = 1, scale = "V"), covariates = covs)
+
+### Observations
 
 The observation compartment can be set by specifying a list to the `obs` argument, with the elements `obs` and `scale`.
 
