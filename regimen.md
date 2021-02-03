@@ -24,12 +24,13 @@ or:
 
 Be careful: if the length of the `amt` vector is not the same as the lenght in `times`, the function will repeat the first `amt` specified. The same goes for the arguments `type`, `cmt`, and `t_inf`.
 
-By default, the `new_regimen_function()` function assumes the dose is given as bolus. If you want to specify that these should be given as infusion, use the following:
+By default, the `new_regimen_function()` function assumes the dose is given as bolus. If you want to specify that these should be given as infusion, specify the `type` and `t_inf` arguments:
 
     reg1 <- new_regimen(
       amt = 100,
       times = c(0, 12, 24, 36, 48),
-      type = "infusion"
+      type = "infusion",
+      t_inf = c(1, 1, 1.5, 1.5, 1)
     )
 
 When you created the model using `new_ode_model`, you also specified a default dosing compartment. If you didn't specify the `dose` argument, the default dosing compartment is 1. Now, should you want to administer the dose into a different compartment, you can override it with the `cmt` argumentfunction:
